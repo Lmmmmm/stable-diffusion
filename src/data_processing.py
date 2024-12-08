@@ -61,7 +61,7 @@ def convert_to_images():
             svg_file_path = os.path.join(SVG_DIR, svg_file)
             jpg_file_path = os.path.join(JPG_DIR, svg_file.replace('.svg', '.jpg'))
 
-            # Convert SVG to JPG
+            # Convert SVG to png
             cairosvg.svg2png(
                 url=svg_file_path,
                 write_to=jpg_file_path,
