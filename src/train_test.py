@@ -53,7 +53,6 @@ def train_model(
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
-    # 加载模型
     pipeline = StableDiffusionPipeline.from_pretrained(
         model_id,
         torch_dtype=torch.float32,
@@ -62,11 +61,9 @@ def train_model(
         use_safetensors=True
     ).to(device)
 
-    # 启用内存优化
     pipeline.enable_attention_slicing(slice_size="max")
     pipeline.enable_vae_slicing()
 
-    # 准备数据加载器
     dataset = KanjiDataset(max_samples=max_samples)
     dataloader = DataLoader(
         dataset,
@@ -75,13 +72,11 @@ def train_model(
         num_workers=0
     )
 
-    # 优化器
     optimizer = torch.optim.AdamW(
         pipeline.unet.parameters(),
         lr=learning_rate
     )
 
-    # 创建检查点目录
     os.makedirs(CHECKPOINT_DIR, exist_ok=True)
 
     for epoch in range(num_epochs):
@@ -93,7 +88,6 @@ def train_model(
             images = batch["image"].to(device)
             text = batch["meaning"]
 
-            # 前向传播
             with torch.autocast(device_type=device.type):
                 text_inputs = pipeline.tokenizer(
                     text,
@@ -116,15 +110,12 @@ def train_model(
 
             print(f"Batch loss: {loss.item():.4f}")
 
-            # 反向传播
             loss.backward()
             optimizer.step()
             optimizer.zero_grad()
 
-            # 清理内存
             torch.cuda.empty_cache()
 
-        # 保存检查点
         checkpoint_path = os.path.join(CHECKPOINT_DIR, f'test_epoch_{epoch+1}')
         os.makedirs(checkpoint_path, exist_ok=True)
         pipeline.save_pretrained(checkpoint_path)
@@ -134,14 +125,14 @@ def train_model(
 
 def main():
     try:
-        print("开始测试训练...")
-        print(f"数据目录: {DATA_DIR}")
-        print(f"图片目录: {JPG_DIR}")
-        print(f"检查点目录: {CHECKPOINT_DIR}")
+        print("Starting test training...")
+        print(f"Data directory: {DATA_DIR}")
+        print(f"Image directory: {JPG_DIR}")
+        print(f"Checkpoint directory: {CHECKPOINT_DIR}")
         train_model()
-        print("测试训练完成！")
+        print("Test training completed!")
     except Exception as e:
-        print(f"训练过程中出现错误: {str(e)}")
+        print(f"Error occurred during training: {str(e)}")
 
 if __name__ == "__main__":
     main()

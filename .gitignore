@@ -39,8 +39,6 @@ wandb/
 *.ckpt
 *.pth
 *.pt
-*.bin
-*.safetensors
 
 # Logs
 logs/
