@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Project specific
+data/kanji_jpg/
+data/kanji_svg/
+wandb/
+*.ckpt
+*.pth
+*.pt
+*.bin
+*.safetensors
+
+# Logs
+logs/
+*.log
+*.log.*
+*.out
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Local development settings
+.env
+.env.local
+.env.*.local
+
+# Model files and large files
+*.model
+*.h5
+*.hdf5
+*.pkl
+*.joblib
+
+# Temporary files
+tmp/
+temp/
