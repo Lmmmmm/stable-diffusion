@@ -46,8 +46,8 @@ class KanjiTrainer:
     def __init__(
         self,
         model_id="CompVis/stable-diffusion-v1-4",
-        learning_rate=1e-6,
-        batch_size=4,
+        learning_rate=1e-5,
+        batch_size=16,
         num_epochs=10
     ):
         self.model_id = model_id
